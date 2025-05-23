@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-# Created by https://www.toptal.com/developers/gitignore/api/windows,django,python,visualstudiocode,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,django,python,visualstudiocode,git
+# Created by https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python,django
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,visualstudiocode,python,django
 
 ### Django ###
 *.log
@@ -11,7 +10,6 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
-venv
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -19,10 +17,6 @@ venv
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
-=======
-# Byte-compiled / optimized / DLL files
-__pycache__/
->>>>>>> cee5b704df3ce7e7d3a1f986a308e523f4db6f6d
 *.py[cod]
 *$py.class
 
@@ -76,18 +70,8 @@ cover/
 
 # Translations
 *.mo
-<<<<<<< HEAD
 
 # Django stuff:
-=======
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
->>>>>>> cee5b704df3ce7e7d3a1f986a308e523f4db6f6d
 
 # Flask stuff:
 instance/
@@ -122,15 +106,6 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-<<<<<<< HEAD
-=======
-# UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#uv.lock
-
->>>>>>> cee5b704df3ce7e7d3a1f986a308e523f4db6f6d
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
@@ -143,15 +118,8 @@ ipython_config.py
 #pdm.lock
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
-<<<<<<< HEAD
 #   https://pdm.fming.dev/#use-with-ide
 .pdm.toml
-=======
-#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
->>>>>>> cee5b704df3ce7e7d3a1f986a308e523f4db6f6d
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
@@ -202,22 +170,6 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-
-<<<<<<< HEAD
-### Git ###
-# Created by git for backups. To disable backups in Git:
-# $ git config --global mergetool.keepBackup false
-*.orig
-
-# Created by git when using merge tools for conflicts
-*.BACKUP.*
-*.BASE.*
-*.LOCAL.*
-*.REMOTE.*
-*_BACKUP_*.txt
-*_BASE_*.txt
-*_LOCAL_*.txt
-*_REMOTE_*.txt
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -356,11 +308,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,django,python,visualstudiocode,git
-=======
-# Ruff stuff:
-.ruff_cache/
-
-# PyPI configuration file
-.pypirc
->>>>>>> cee5b704df3ce7e7d3a1f986a308e523f4db6f6d
+# End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python,django
