@@ -18,7 +18,7 @@ Including another URLconf
 # URL 라우팅 설정
 # 루트 URL에 대한 요청이 들어오면 views.index 함수를 호출하여 응답
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
@@ -26,6 +26,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('api/', include('api.urls')),  # API URL 추가(api 앱의 urls.py 파일 참조)
 ]
 
 if settings.DEBUG:
