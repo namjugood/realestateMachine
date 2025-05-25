@@ -83,7 +83,7 @@
     </tr>
     <tr>
         <td>📈 datakart</td>
-        <td>데이터 시각화</td>
+        <td>공공데이터포털 라이브러리</td>
     </tr>
     <tr>
         <td>📊 matplotlib</td>
