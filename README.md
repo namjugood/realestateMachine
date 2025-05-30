@@ -22,13 +22,13 @@
         </tr>
     </thead>
     <tr>
-        <td rowspan="4"><strong>백엔드</strong></td>
+        <td rowspan="5"><strong>백엔드</strong></td>
         <td>🐍 언어</td>
-        <td>Python 3.8+</td>
+        <td>Python 3.13</td>
     </tr>
     <tr>
         <td>🎯 프레임워크</td>
-        <td>Django 4.2</td>
+        <td>Django 5.0</td>
     </tr>
     <tr>
         <td>🔄 API 프레임워크</td>
@@ -39,21 +39,8 @@
         <td>SQLite3</td>
     </tr>
     <tr>
-        <td rowspan="4"><strong>프론트엔드</strong></td>
-        <td>📝 마크업</td>
-        <td>HTML5</td>
-    </tr>
-    <tr>
-        <td>🎨 스타일링</td>
-        <td>CSS3</td>
-    </tr>
-    <tr>
-        <td>⚡ 스크립트</td>
-        <td>JavaScript</td>
-    </tr>
-    <tr>
-        <td>🔌 라이브러리</td>
-        <td>• jQuery<br>• jQuery UI</td>
+        <td>🗄️ ORM</td>
+        <td>Django ORM</td>
     </tr>
     <tr>
         <td rowspan="3"><strong>개발 도구</strong></td>
@@ -69,7 +56,7 @@
         <td>Postman</td>
     </tr>
     <tr>
-        <td rowspan="5"><strong>주요 라이브러리</strong></td>
+        <td rowspan="6"><strong>주요 라이브러리</strong></td>
         <td>🔌 requests</td>
         <td>HTTP 요청 처리</td>
     </tr>
@@ -82,8 +69,12 @@
         <td>환경 변수 관리</td>
     </tr>
     <tr>
-        <td>📈 datakart</td>
-        <td>공공데이터포털 라이브러리</td>
+        <td>🔄 django-filter</td>
+        <td>Django 필터링 기능</td>
+    </tr>
+    <tr>
+        <td>🔒 django-cors-headers</td>
+        <td>CORS 설정</td>
     </tr>
     <tr>
         <td>📊 matplotlib</td>
@@ -101,11 +92,12 @@
 |------|-----------|-----------|
 | 5월 23일 | 🏗️ 프로젝트 초기 설정 | • Django 프로젝트 생성<br>• 기본 디렉토리 구조 설정<br>• requirements.txt 생성<br>• core 앱 생성 및 기본 설정 |
 | 5월 25일 | 💾 데이터베이스 및 API 설정 | • SQLite3 데이터베이스 초기화<br>• 공공데이터포털 API 키 설정<br>• .env 파일 구성<br>• 기본 API 호출 함수 구현 |
+| 5월 30일 | 🔄 프로젝트 재설정 | • 프로젝트 완전 API 서버화<br>• 기본 앱 구조 생성<br>• 사용자 인증 시스템 구현<br>• 부동산 매물 기본 모델 설계<br>• 공통 유틸리티 함수 구현 |
+| 5월 31일 | 🔄 앱 구조 개선 및 API 엔드포인트 구현 | • 부동산 매물 관리 앱 이름을 `properties`에서 `realEstate`로 변경<br>• 마이그레이션 파일 재설정 및 의존성 수정<br>• URL 패턴 재구성 및 라우팅 설정<br>• API 엔드포인트 구현<br>  - `/api/properties/getRealEstateAptList/`: 아파트 매매 실거래가 조회<br>  - `/api/properties/getStanReginCd/`: 표준 지역 코드 조회 |
 
 ### 진행 예정 작업
 | 기간 | 작업 내용 | 세부 사항 |
 |------|-----------|-----------|
-| 5월 26일 ~ 5월 31일 | 📁 기본 구조 보완<br>📊 데이터 수집 구현 | • templates 디렉토리 구성<br>• static 파일 설정<br>• 기본 모델 설계<br>• 실거래가 데이터 수집 API 구현<br>• 지역 코드 조회 API 구현<br>• 데이터 파싱 및 저장 로직 구현 |
 | 6월 1일 ~ 6월 5일 | 🎨 프론트엔드 개발<br>🔄 기능 개선 | • 기본 UI 템플릿 구현<br>• jQuery UI datepicker 통합<br>• 데이터 표시 테이블 구현<br>• AJAX를 통한 비동기 데이터 로딩<br>• 에러 처리 및 사용자 피드백 개선<br>• UI/UX 개선 |
 | 6월 6일 ~ 6월 10일 | 📈 데이터 시각화<br>🔍 검색 필터<br>⚡ 성능 최적화 | • 차트 및 그래프 구현<br>• 통계 분석 기능 추가<br>• 지역별 검색 기능<br>• 가격대별 필터링<br>• 데이터 캐싱 구현<br>• 쿼리 최적화 |
 | 6월 11일 ~ 6월 15일 | ✅ 테스트<br>🚀 배포 준비 | • 단위 테스트 작성<br>• 통합 테스트 수행<br>• 배포 환경 구성<br>• 문서화 완료 |
@@ -231,23 +223,121 @@ python manage.py collectstatic --clear
 ## 6. 📁 프로젝트 구조
 ```
 realEstateMachine/
-├── core/                  # 메인 애플리케이션
-│   ├── static/            # 정적 파일 (CSS, JS)
-│   ├── templates/         # HTML 템플릿
-│   ├── views/             # 뷰 로직
-│   ├── urls.py            # URL 라우팅
-│   ├── settings.py        # 프로젝트 설정 (사용자 설정 필요)
-│   ├── asgi.py            # ASGI 설정
-│   └── wsgi.py            # WSGI 설정
-├── venv/                  # 가상환경
-├── .env                   # api키나 환경변수 설정(사용자 설정 필요요)
-├── .gitignore             # Git 제외 파일 목록 (사용자 설정 필요)
-├── db.sqlite3             # SQLite 데이터베이스
-├── manage.py              # Django 관리 스크립트
-├── requirements.txt       # 의존성 패키지
-├── run.py                 # 실행 스크립트
-└── README.md              # 프로젝트 문서
+├── src/                     # 소스 코드 디렉토리
+│   ├── apps/                # 애플리케이션 디렉토리
+│   │   ├── core/            # 핵심 기능
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py    # 기본 모델 정의 (BaseModel)
+│   │   │   ├── views.py     # 메인 페이지 뷰
+│   │   │   └── urls.py      # URL 라우팅
+│   │   │
+│   │   ├── real_estate/     # 부동산 관련 기능
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py    # 부동산 모델
+│   │   │   ├── views.py     # 부동산 관련 뷰
+│   │   │   └── urls.py      # URL 라우팅
+│   │   │
+│   │   ├── users/        # 사용자 관리 기능
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py    # 사용자 모델
+│   │   │   ├── views.py     # 사용자 관련 뷰
+│   │   │   └── urls.py      # URL 라우팅
+│   │   │
+│   │   └── __init__.py
+│   │
+│   ├── config/           # 프로젝트 설정
+│   │   ├── __init__.py
+│   │   ├── settings.py     # 프로젝트 설정 (Django 설정, 앱 등록, 미들웨어 등)
+│   │   ├── urls.py         # 메인 URL 설정 (앱 URL 포함)
+│   │   ├── asgi.py         # ASGI 설정
+│   │   └── wsgi.py         # WSGI 설정
+│   │
+│   ├── static/           # 정적 파일
+│   │   ├── css/          # CSS 파일
+│   │   └── js/           # JavaScript 파일
+│   │
+│   └── templates/        # 템플릿 파일
+│       └── index.html    # 메인 페이지 템플릿
+│
+├── venv/                 # 가상환경
+├── .env                  # 환경 변수 설정 (API 키, 시크릿 키 등)
+├── .gitignore           # Git 제외 파일 목록
+├── db.sqlite3           # SQLite 데이터베이스
+├── manage.py            # Django 관리 스크립트
+├── requirements.txt     # 의존성 패키지
+└── README.md            # 프로젝트 문서
 ```
+
+### 앱별 주요 기능
+
+<details>
+<summary>📱 앱별 주요 기능 상세 보기</summary>
+
+<table>
+    <thead>
+        <tr>
+            <th>앱</th>
+            <th>기능</th>
+            <th>상세 내용</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2"><strong>Common</strong></td>
+            <td>API 호출 유틸리티</td>
+            <td>
+                • <code>callGetApi</code>: 외부 API 호출 및 응답 처리<br>
+                • <code>xmlToJson</code>: XML 응답을 JSON으로 변환
+            </td>
+        </tr>
+        <tr>
+            <td>캐싱 유틸리티(추가예정)</td>
+            <td>
+                • API 응답 캐싱<br>
+                • 캐시 관리 기능
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3"><strong>Real Estate</strong></td>
+            <td>부동산 매물 관리</td>
+            <td>
+                • 매물 등록/수정/삭제<br>
+                • 매물 조회 및 필터링
+            </td>
+        </tr>
+        <tr>
+            <td>실거래가 데이터 관리</td>
+            <td>
+                • 공공데이터포털 API 연동<br>
+                • 실거래가 데이터 조회<br>
+                • 지역 코드 관리
+            </td>
+        </tr>
+        <tr>
+            <td>API 엔드포인트</td>
+            <td>
+                • <code>/api/properties/getRealEstateAptList/</code>: 아파트 매매 실거래가 조회<br>
+                • <code>/api/properties/getStanReginCd/</code>: 표준 지역 코드 조회
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2"><strong>Users(추가예정)</strong></td>
+            <td>사용자 인증</td>
+            <td>
+                • JWT 기반 인증<br>
+                • 권한 관리
+            </td>
+        </tr>
+        <tr>
+            <td>사용자 관리</td>
+            <td>
+                • 회원가입/로그인<br>
+                • 사용자 정보 관리
+            </td>
+        </tr>
+    </tbody>
+</table>
+</details>
 
 ## 7. 💡 주요 기능
 - 📊 실시간 부동산 실거래가 데이터 조회

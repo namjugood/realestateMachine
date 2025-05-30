@@ -15,27 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# URL 라우팅 설정
-# 루트 URL에 대한 요청이 들어오면 views.index 함수를 호출하여 응답
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from .views import views
+from rest_framework.routers import DefaultRouter
+from estate_core.apps.users.views import UserViewSet
+from estate_core.apps.realEstate.views import RealEstateViewSet
+
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'realEstate', RealEstateViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    path('get-stan-region-cd/', views.getStanReginCd, name='get_stan_region_cd'),
-    path('get-apt-real-estate/', views.getAptRealEstate, name='get_apt_real_estate'),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ]
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
