@@ -7,6 +7,7 @@ from .serializers import PropertySerializer
 from ..common.utils import callGetApi
 from django.conf import settings
 import logging
+from estate_core.config.exceptions import ExceptionView, ParameterException, DataNotFoundException, ServerException
 
 class RealEstateViewSet(viewsets.ModelViewSet):
     """
@@ -32,6 +33,9 @@ class RealEstateViewSet(viewsets.ModelViewSet):
         @regions : str 지역명
         """
         try:
+            if not request.data.get('regions'):
+                raise ParameterException('지역명이 필요합니다.')
+
             params = {
                 'serviceKey': settings.DATAGO_KEY,
                 'pageNo': 1,
@@ -39,21 +43,16 @@ class RealEstateViewSet(viewsets.ModelViewSet):
                 'locatadd_nm': request.data.get('regions'),
                 'type': 'xml'
             }
-            logging.info("params.get('serviceKey')", params.get('serviceKey'))
+            
             result = callGetApi(settings.STAN_REGIN_CD, params=params)
-            return Response(result)
-        except AttributeError as e:
-            logging.error(f"getStanReginCd 오류: {e}")
-            return Response(
-                {'error': str(e)},
-                status=500
-            )
+            if not result:
+                raise DataNotFoundException('해당 지역의 데이터가 없습니다.')
+
+            return ExceptionView(data=result, status=status.HTTP_200_OK)
+            
         except Exception as e:
             logging.error(f"getStanReginCd 오류: {e}")
-            return Response(
-                {'error': str(e)},
-                status=500
-            )
+            raise ServerException(f"서버 오류가 발생했습니다: {str(e)}")
 
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def getRealEstateAptList(self, request):
@@ -63,26 +62,26 @@ class RealEstateViewSet(viewsets.ModelViewSet):
         @deal_ym : str 거래년월
         """
         try:
+            region_code = request.data.get('region_code')
+            deal_ym = request.data.get('deal_ym')
+
+            if not region_code or not deal_ym:
+                raise ParameterException('지역코드와 거래년월이 필요합니다.')
+
             params = {
                 'serviceKey': settings.DATAGO_KEY,
                 'pageNo': 1,
                 'numOfRows': 1000,
-                'LAWD_CD': request.data.get('region_code'),
-                'DEAL_YMD': request.data.get('deal_ym')
+                'LAWD_CD': region_code,
+                'DEAL_YMD': deal_ym
             }
-            # 외부 API 호출
+            
             result = callGetApi(settings.RTMS_DATA_SVC_APT_TRADE_DEV, params=params)
+            if not result:
+                raise DataNotFoundException('해당 지역의 실거래가 데이터가 없습니다.')
 
-            return Response(result)
-        except AttributeError as e:
-            logging.error(f"getRealEstateAptList 오류: {e}")
-            return Response(
-                {'error': str(e)},
-                status=500
-            )
+            return ExceptionView(data=result, status=status.HTTP_200_OK)
+            
         except Exception as e:
             logging.error(f"getRealEstateAptList 오류: {e}")
-            return Response(
-                {'error': str(e)},
-                status=500
-            )
+            raise ServerException(f"서버 오류가 발생했습니다: {str(e)}")

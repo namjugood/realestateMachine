@@ -84,31 +84,8 @@
 </details>
 
 ## 4. ⏱️ 타임라인
-<details>
-<summary>📅 개발 진행 상황 보기</summary>
+자세한 내용은 [TIMELINE.md](./TIMELINE.md) 문서를 참조하세요.
 
-### 완료된 작업
-| 날짜 | 작업 내용 | 세부 사항 |
-|------|-----------|-----------|
-| 5월 23일 | 🏗️ 프로젝트 초기 설정 | • Django 프로젝트 생성<br>• 기본 디렉토리 구조 설정<br>• requirements.txt 생성<br>• core 앱 생성 및 기본 설정 |
-| 5월 25일 | 💾 데이터베이스 및 API 설정 | • SQLite3 데이터베이스 초기화<br>• 공공데이터포털 API 키 설정<br>• .env 파일 구성<br>• 기본 API 호출 함수 구현 |
-| 5월 30일 | 🔄 프로젝트 재설정 | • 프로젝트 완전 API 서버화<br>• 기본 앱 구조 생성<br>• 사용자 인증 시스템 구현<br>• 부동산 매물 기본 모델 설계<br>• 공통 유틸리티 함수 구현 |
-| 5월 31일 | 🔄 앱 구조 개선 및 API 엔드포인트 구현 | • 부동산 매물 관리 앱 이름을 `properties`에서 `realEstate`로 변경<br>• 마이그레이션 파일 재설정 및 의존성 수정<br>• URL 패턴 재구성 및 라우팅 설정<br>• API 엔드포인트 구현<br>  - `/api/properties/getRealEstateAptList/`: 아파트 매매 실거래가 조회<br>  - `/api/properties/getStanReginCd/`: 표준 지역 코드 조회 |
-
-### 진행 예정 작업
-| 기간 | 작업 내용 | 세부 사항 |
-|------|-----------|-----------|
-| 6월 1일 ~ 6월 5일 | 🎨 프론트엔드 개발<br>🔄 기능 개선 | • 기본 UI 템플릿 구현<br>• jQuery UI datepicker 통합<br>• 데이터 표시 테이블 구현<br>• AJAX를 통한 비동기 데이터 로딩<br>• 에러 처리 및 사용자 피드백 개선<br>• UI/UX 개선 |
-| 6월 6일 ~ 6월 10일 | 📈 데이터 시각화<br>🔍 검색 필터<br>⚡ 성능 최적화 | • 차트 및 그래프 구현<br>• 통계 분석 기능 추가<br>• 지역별 검색 기능<br>• 가격대별 필터링<br>• 데이터 캐싱 구현<br>• 쿼리 최적화 |
-| 6월 11일 ~ 6월 15일 | ✅ 테스트<br>🚀 배포 준비 | • 단위 테스트 작성<br>• 통합 테스트 수행<br>• 배포 환경 구성<br>• 문서화 완료 |
-
-### 진행률
-- [x] 1단계: 프로젝트 초기화 (100%)
-- [x] 2단계: 기본 API 연동 (100%)
-- [ ] 3단계: 프론트엔드 개발 (0%)
-- [ ] 4단계: 데이터 시각화 (0%)
-- [ ] 5단계: 테스트 및 배포 (0%)
-</details>
 
 ## 5. 🚀 설치 및 실행 방법
 <details>
@@ -223,49 +200,48 @@ python manage.py collectstatic --clear
 ## 6. 📁 프로젝트 구조
 ```
 realEstateMachine/
-├── src/                     # 소스 코드 디렉토리
-│   ├── apps/                # 애플리케이션 디렉토리
-│   │   ├── core/            # 핵심 기능
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py    # 기본 모델 정의 (BaseModel)
-│   │   │   ├── views.py     # 메인 페이지 뷰
-│   │   │   └── urls.py      # URL 라우팅
-│   │   │
-│   │   ├── real_estate/     # 부동산 관련 기능
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py    # 부동산 모델
-│   │   │   ├── views.py     # 부동산 관련 뷰
-│   │   │   └── urls.py      # URL 라우팅
-│   │   │
-│   │   ├── users/        # 사용자 관리 기능
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py    # 사용자 모델
-│   │   │   ├── views.py     # 사용자 관련 뷰
-│   │   │   └── urls.py      # URL 라우팅
-│   │   │
+├── estate_core/                # 메인 Django 앱 디렉토리
+│   ├── apps/                   # 각종 앱 디렉토리
+│   │   ├── common/             # 공통 유틸리티, 모델 등
+│   │   │   ├── models.py
+│   │   │   ├── utils.py
+│   │   │   └── ...
+│   │   ├── realEstate/         # 부동산 관련 기능
+│   │   │   ├── models.py
+│   │   │   ├── views.py
+│   │   │   ├── serializers.py
+│   │   │   └── ...
+│   │   ├── users/              # 사용자 관리 기능
+│   │   │   ├── models.py
+│   │   │   ├── views.py
+│   │   │   ├── serializers.py
+│   │   │   └── ...
 │   │   └── __init__.py
-│   │
-│   ├── config/           # 프로젝트 설정
-│   │   ├── __init__.py
-│   │   ├── settings.py     # 프로젝트 설정 (Django 설정, 앱 등록, 미들웨어 등)
-│   │   ├── urls.py         # 메인 URL 설정 (앱 URL 포함)
-│   │   ├── asgi.py         # ASGI 설정
-│   │   └── wsgi.py         # WSGI 설정
-│   │
-│   ├── static/           # 정적 파일
-│   │   ├── css/          # CSS 파일
-│   │   └── js/           # JavaScript 파일
-│   │
-│   └── templates/        # 템플릿 파일
-│       └── index.html    # 메인 페이지 템플릿
-│
-├── venv/                 # 가상환경
-├── .env                  # 환경 변수 설정 (API 키, 시크릿 키 등)
-├── .gitignore           # Git 제외 파일 목록
-├── db.sqlite3           # SQLite 데이터베이스
-├── manage.py            # Django 관리 스크립트
-├── requirements.txt     # 의존성 패키지
-└── README.md            # 프로젝트 문서
+│   ├── config/                 # 프로젝트 설정 및 예외 처리
+│   │   ├── settings.py         # Django 설정
+│   │   ├── urls.py             # 메인 URL 라우팅
+│   │   ├── exceptions.py       # 커스텀 예외 및 응답 포맷
+│   │   ├── wsgi.py
+│   │   ├── asgi.py
+│   │   └── __init__.py
+│   ├── core/                   # 미들웨어, 권한 등 핵심 기능
+│   │   ├── middleware.py
+│   │   ├── permissions.py
+│   │   └── ...
+│   ├── static/                 # 정적 파일 (css, js, docs, images 등)
+│   │   ├── docs/
+│   │   └── images/
+│   └── __init__.py
+├── manage.py                   # Django 관리 스크립트
+├── requirements.txt            # 의존성 패키지 목록
+├── .env                        # 환경 변수 파일
+├── .gitignore                  # Git 제외 파일 목록
+├── db.sqlite3                  # SQLite 데이터베이스
+├── run.py                      # 실행 스크립트(옵션)
+├── README.md                   # 프로젝트 문서
+├── TIMELINE.md                 # 개발 타임라인 문서
+├── API.md                      # API 명세 문서
+└── venv/                       # 가상환경
 ```
 
 ### 앱별 주요 기능

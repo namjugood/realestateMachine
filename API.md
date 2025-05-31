@@ -25,27 +25,50 @@ GET /api/properties/getRealEstateAptList/
     "response": {
         "header": {
             "resultCode": "00",
-            "resultMsg": "NORMAL SERVICE."
+            "resultMsg": "API 호출 성공"
         },
         "body": {
-            "items": [
-                {
-                    "거래금액": "95,000",
-                    "건축년도": "2008",
-                    "년": "2024",
-                    "법정동": "서울특별시 강남구 역삼동",
-                    "아파트": "래미안아파트",
-                    "월": "3",
-                    "일": "15",
-                    "전용면적": "84.97",
-                    "지번": "123-45",
-                    "지역코드": "11680",
-                    "층": "8"
-                }
-            ],
-            "numOfRows": 10,
-            "pageNo": 1,
-            "totalCount": 1
+            "items": {
+                "item": [
+                    {
+                        "aptDong": {},
+                        "aptNm": "삼익",
+                        "aptSeq": "11170-49",
+                        "bonbun": "0300",
+                        "bubun": "0301",
+                        "buildYear": "1979",
+                        "buyerGbn": {},
+                        "cdealDay": {},
+                        "cdealType": {},
+                        "dealAmount": "105,000",
+                        "dealDay": "30",
+                        "dealMonth": "1",
+                        "dealYear": "2016",
+                        "dealingGbn": {},
+                        "estateAgentSggNm": {},
+                        "excluUseAr": "145.19",
+                        "floor": "9",
+                        "jibun": "300-301",
+                        "landCd": "1",
+                        "landLeaseholdGbn": "N",
+                        "rgstDate": {},
+                        "roadNm": "이촌로",
+                        "roadNmBonbun": "00260",
+                        "roadNmBubun": "00000",
+                        "roadNmCd": "3102008",
+                        "roadNmSeq": "02",
+                        "roadNmSggCd": "11170",
+                        "roadNmbCd": "0",
+                        "sggCd": "11170",
+                        "slerGbn": {},
+                        "umdCd": "12900",
+                        "umdNm": "이촌동"
+                    }
+                ],
+                "numOfRows": 10,
+                "pageNo": 1,
+                "totalCount": 1
+            }
         }
     }
 }
@@ -67,7 +90,7 @@ GET /api/properties/getStanReginCd/
     "response": {
         "header": {
             "resultCode": "00",
-            "resultMsg": "NORMAL SERVICE."
+            "resultMsg": "API 호출 성공"
         },
         "body": {
             "items": [
@@ -85,13 +108,17 @@ GET /api/properties/getStanReginCd/
 ```
 
 ## ⚠️ 에러 코드
-| 코드 | 설명 |
-|------|------|
-| 00 | 정상 처리 |
-| 01 | 인증 오류 |
-| 02 | 필수 파라미터 누락 |
-| 03 | 데이터 없음 |
-| 99 | 기타 오류 |
+ 코드 | HTTP 상태 | 예외 클래스 | 설명 |
+|------|-----------|---------------------------|--------------------------------|
+| 00 | 200 | - | 정상 처리 |
+| 01 | 401 | AuthenticationException | 인증 오류 |
+| 02 | 400 | ParameterException | 필수 파라미터 누락 |
+| 03 | 404/400 | DataNotFoundException | 데이터 없음 |
+| 04 | 403 | PermissionException | 권한 없음 |
+| 05 | 502 | ExternalAPIException | 외부 API 호출 오류 |
+| 06 | 500 | DatabaseException | 데이터베이스 오류 |
+| 07 | 400 | BusinessLogicException | 비즈니스 로직 오류 |
+| 99 | 500 | ServerException | 기타 서버 오류 |
 
 ## 📝 응답 형식
 모든 API 응답은 다음과 같은 공통 형식을 따릅니다:
@@ -104,10 +131,12 @@ GET /api/properties/getStanReginCd/
             "resultMsg": "string"
         },
         "body": {
-            "items": [],
-            "numOfRows": "number",
-            "pageNo": "number",
-            "totalCount": "number"
+            "items":{
+                "items": [],
+                "numOfRows": "number",
+                "pageNo": "number",
+                "totalCount": "number"
+            }
         }
     }
 }
