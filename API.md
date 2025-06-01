@@ -10,7 +10,7 @@
 
 ### 1. 아파트 매매 실거래가 조회
 ```http
-GET /api/properties/getRealEstateAptList/
+POST /api/properties/getRealEstateAptList/
 ```
 
 #### 요청 파라미터
@@ -76,13 +76,13 @@ GET /api/properties/getRealEstateAptList/
 
 ### 2. 표준 지역 코드 조회
 ```http
-GET /api/properties/getStanReginCd/
+POST /api/properties/getStanReginCd/
 ```
 
 #### 요청 파라미터
 | 파라미터 | 타입 | 필수 여부 | 설명 |
 |----------|------|------------|------|
-| regions | string | Y | 지역명(예 : '서울특별시') |
+| regions | string | Y | 지역명(예 : '서울특별시', '장항동') |
 
 #### 응답
 ```json
@@ -101,6 +101,69 @@ GET /api/properties/getStanReginCd/
             ],
             "numOfRows": 10,
             "pageNo": 1,
+            "totalCount": 1
+        }
+    }
+}
+```
+
+### 3. 기간별 아파트 매매 실거래가 조회
+```http
+POST /api/properties/getRealEstateAptListDuration/
+```
+
+#### 요청 파라미터
+| 파라미터 | 타입 | 필수 여부 | 설명 |
+|----------|------|------------|------|
+| regions_cd | string | Y | 지역코드 (예: 11110) |
+| start_deal_ym | array | Y | 조회시작 계약년월 (예: "202403") |
+| end_deal_ym | array | Y | 조회종료 계약년월 (예: "202405") |
+
+#### 응답
+```json
+{
+    "response": {
+        "header": {
+            "resultCode": "00",
+            "resultMsg": "API 호출 성공"
+        },
+        "body": {
+            "items": [
+                {
+                    "aptDong": {},
+                    "aptNm": "삼익",
+                    "aptSeq": "11170-49",
+                    "bonbun": "0300",
+                    "bubun": "0301",
+                    "buildYear": "1979",
+                    "buyerGbn": {},
+                    "cdealDay": {},
+                    "cdealType": {},
+                    "dealAmount": "105,000",
+                    "dealDay": "30",
+                    "dealMonth": "1",
+                    "dealYear": "2016",
+                    "dealingGbn": {},
+                    "estateAgentSggNm": {},
+                    "excluUseAr": "145.19",
+                    "floor": "9",
+                    "jibun": "300-301",
+                    "landCd": "1",
+                    "landLeaseholdGbn": "N",
+                    "rgstDate": {},
+                    "roadNm": "이촌로",
+                    "roadNmBonbun": "00260",
+                    "roadNmBubun": "00000",
+                    "roadNmCd": "3102008",
+                    "roadNmSeq": "02",
+                    "roadNmSggCd": "11170",
+                    "roadNmbCd": "0",
+                    "sggCd": "11170",
+                    "slerGbn": {},
+                    "umdCd": "12900",
+                    "umdNm": "이촌동"
+                }
+            ],
             "totalCount": 1
         }
     }

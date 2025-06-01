@@ -83,11 +83,54 @@
 </table>
 </details>
 
-## 4. ⏱️ 타임라인
+## 4. 📡 공공데이터포털 API 연동
+<details>
+<summary>🔌 API 연동 상세 보기</summary>
+
+### 사용 API 목록
+ - 자세한 API 명세는 [API.md](./API.md) 문서를 참조하세요.
+<table>
+    <thead>
+        <tr>
+            <th>API 명</th>
+            <th>용도</th>
+            <th>데이터 형식</th>
+            <th>제공 기관</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>아파트매매 실거래가 상세 자료</td>
+            <td>아파트 실거래가 데이터 조회</td>
+            <td>JSON</td>
+            <td>국토교통부</td>
+        </tr>
+        <tr>
+            <td>전국 법정동 코드</td>
+            <td>지역 코드 조회</td>
+            <td>JSON</td>
+            <td>행정안전부</td>
+        </tr>
+    </tbody>
+</table>
+
+### API 연동 방식
+- REST API 방식으로 데이터 요청
+- XML 응답을 JSON으로 자동 변환
+- 에러 처리 및 재시도 로직 구현
+- 응답 데이터 캐싱 처리
+
+### 데이터 갱신 주기
+- 실거래가 데이터: 매월 1일 갱신
+- 법정동 코드: 분기별 갱신
+
+</details>
+
+## 5. ⏱️ 타임라인
 자세한 내용은 [TIMELINE.md](./TIMELINE.md) 문서를 참조하세요.
 
 
-## 5. 🚀 설치 및 실행 방법
+## 6. 🚀 설치 및 실행 방법
 <details>
 <summary>📋 설치 및 실행 방법 보기</summary>
 
@@ -197,7 +240,7 @@ python manage.py collectstatic --clear
 ```
 </details>
 
-## 6. 📁 프로젝트 구조
+## 7. 📁 프로젝트 구조
 ```
 realEstateMachine/
 ├── estate_core/                # 메인 Django 앱 디렉토리
@@ -315,8 +358,7 @@ realEstateMachine/
 </table>
 </details>
 
-## 7. 💡 주요 기능
-자세한 API 명세는 [API.md](./API.md) 문서를 참조하세요.
+## 8. 💡 주요 기능
 - 📊 실시간 부동산 실거래가 데이터 조회
   - 아파트 매매 실거래가 조회 API (`/api/properties/getRealEstateAptList/`)
   - 지역별, 기간별 실거래가 데이터 제공
