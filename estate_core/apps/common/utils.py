@@ -4,6 +4,7 @@ import requests
 import xml.etree.ElementTree as ET
 import json
 import logging
+from datetime import datetime
 
 def format_phone_number(phone_number: str) -> Optional[str]:
     """
@@ -123,3 +124,22 @@ def xmlToJson(xml_string: str) -> Dict[str, Any]:
         raise ValueError(f"XML 파싱 오류: {str(e)}")
     except Exception as e:
         raise ValueError(f"데이터 변환 중 오류 발생: {str(e)}")
+
+def get_deal_ym_range(start_deal_ym, end_deal_ym):
+    """
+    주어진 시작/종료 거래년월(YYYY.MM) 범위 내의 모든 거래년월 리스트를 반환합니다.
+    연도/월 경계(12월→1월)도 자동 처리됩니다.
+    예: get_deal_ym_range('202312', '202402') → ['202312', '202401', '202402']
+    """
+    start = datetime.strptime(start_deal_ym, "%Y%m")
+    end = datetime.strptime(end_deal_ym, "%Y%m")
+    deal_ym = []
+    current = start
+    while current <= end:
+        deal_ym.append(current.strftime("%Y%m"))
+        # 다음 달로 이동
+        if current.month == 12:
+            current = current.replace(year=current.year + 1, month=1)
+        else:
+            current = current.replace(month=current.month + 1)
+    return deal_ym

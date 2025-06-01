@@ -27,7 +27,7 @@ class ExceptionView(Response):
                 formatted_data = {
                     "response": {
                         "header": {
-                            "resultCode": str(status).zfill(3),
+                            "resultCode": str(status) if isinstance(status, int) else status,
                             "resultMsg": error_message
                         },
                         "body": data
@@ -38,7 +38,7 @@ class ExceptionView(Response):
                 formatted_data = {
                     "response": {
                         "header": {
-                            "resultCode": str(status).zfill(3),
+                            "resultCode": str(status) if isinstance(status, int) else status,
                             "resultMsg": str(data) if isinstance(data, (str, dict)) else "API 호출 실패"
                         },
                         "body": data

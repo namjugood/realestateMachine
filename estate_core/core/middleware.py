@@ -2,7 +2,7 @@ import time
 import logging
 from django.conf import settings
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('estate_core')  # 앱 로거 사용
 
 class RequestLoggingMiddleware:
     """
