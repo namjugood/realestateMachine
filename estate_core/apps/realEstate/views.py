@@ -54,7 +54,19 @@ class RealEstateViewSet(viewsets.ModelViewSet):
             if not result:
                 raise DataNotFoundException('해당 지역의 데이터가 없습니다.')
 
-            return ExceptionView(data=result, status=status.HTTP_200_OK)
+            df = pd.DataFrame(result.get('row')).filter(['sido_cd', 'sgg_cd', 'umd_cd', 'ri_cd', 'locatadd_nm'])
+            df['sido_sgg'] = df['sido_cd'] + df['sgg_cd']
+            
+            f_no_umd_cd = df['umd_cd'] == '000'
+            f_no_ri_cd = df['ri_cd'] == '00'
+            f_no_sgg_cd = df['sgg_cd'] != '000'
+            df = df.loc[f_no_umd_cd & f_no_ri_cd & f_no_sgg_cd].sort_values(by='locatadd_nm')
+            df = df.filter(['sido_sgg', 'locatadd_nm'])
+
+            logger.info(f"#############df############# {df}")
+
+            df = df.to_dict(orient='records')
+            return ExceptionView(data=df, status=status.HTTP_200_OK)
             
         except Exception as e:
             logger.error(f"getStanReginCd 오류: {e}")
@@ -91,6 +103,7 @@ class RealEstateViewSet(viewsets.ModelViewSet):
             if not result:
                 raise DataNotFoundException('해당 지역의 실거래가 데이터가 없습니다.')
 
+            print("#############result#############", result)
             return ExceptionView(data=result, status=status.HTTP_200_OK)
             
         except Exception as e:
@@ -111,6 +124,8 @@ class RealEstateViewSet(viewsets.ModelViewSet):
             region_code = request.data.get('region_code')
             start_deal_ym = request.data.get('start_deal_ym')
             end_deal_ym = request.data.get('end_deal_ym')
+            pageNo = request.data.get('pageNo', 1)
+            numOfRows = request.data.get('numOfRows', 1000)
 
             # 파라미터 검증
             if not region_code or not start_deal_ym or not end_deal_ym:
@@ -137,25 +152,49 @@ class RealEstateViewSet(viewsets.ModelViewSet):
             
             resultArr = []
             totalCount = 0
-            for yyyymm in deal_ym:
+            for idx, yyyymm in enumerate(deal_ym):
                 print(yyyymm)
                 params['DEAL_YMD'] = yyyymm
                 result = callGetApi(settings.RTMS_DATA_SVC_APT_TRADE_DEV, params=params)
 
                 if not result:
-                    raise DataNotFoundException('해당 지역의 실거래가 데이터가 없습니다.')
+                    if idx == len(deal_ym) - 1:
+                        if len(resultArr) == 0:
+                            raise DataNotFoundException('해당 지역의 실거래가 데이터가 없습니다.')
+                    else :
+                        continue
                 else :               
                     # 데이터 정제
-                    resultArr.extend(result['body']['items']['item'])
+                    items = result['body']['items']['item']
+                    if not isinstance(items, list):
+                        items = [items]
+                    resultArr.extend(items)
+                    # 총 거래 건수 추가
                     totalCount += int(result['body']['totalCount'])
             
-            df = pd.DataFrame(resultArr)
-            # 총 거래 건수 추가
-            df['totalCount'] = totalCount
-
-            #df.to_csv('resultArr.csv', index=False)
-            print("#############df#############", df)
-            return ExceptionView(data=df, status=status.HTTP_200_OK)
+            # 응답 형식 변경
+            formatted_response = {
+                "response": {
+                    "header": {
+                        "resultCode": "00",
+                        "resultMsg": "API 호출 성공"
+                    },
+                    "body": {
+                        "items": {
+                            "item": resultArr,
+                            "numOfRows": len(resultArr),
+                            "pageNo": 1,
+                            "totalCount": totalCount
+                        }
+                    }
+                }
+            }
+            
+            return Response(formatted_response, status=status.HTTP_200_OK)
+            
         except Exception as e:
             logger.error(f"getRealEstateAptList 오류: {e}")
             raise ServerException(f"서버 오류가 발생했습니다: {str(e)}")
+        
+
+    

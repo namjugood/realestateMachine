@@ -54,9 +54,11 @@ INSTALLED_APPS = [
     'estate_core.apps.common',
     'estate_core.apps.users',
     'estate_core.apps.realEstate',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -194,4 +196,12 @@ LOGGING = {
             'propagate': False,
         },
     },
-} 
+}
+
+# 모든 도메인 허용 (개발용)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# 또는 특정 도메인만 허용 (권장)
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+# ] 

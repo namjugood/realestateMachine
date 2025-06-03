@@ -361,6 +361,7 @@ realEstateMachine/
 ## 8. 💡 주요 기능
 - 📊 실시간 부동산 실거래가 데이터 조회
   - 아파트 매매 실거래가 조회 API (`/api/properties/getRealEstateAptList/`)
+  - 아파트 매매 실거래가 기간별 조회 API (`/api/properties/getRealEstateAptListDuration/`)
   - 지역별, 기간별 실거래가 데이터 제공
   - 상세 매물 정보 (거래금액, 건축년도, 면적 등) 제공
 
