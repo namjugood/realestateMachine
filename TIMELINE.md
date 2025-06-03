@@ -8,6 +8,14 @@
 - 🟥 5단계: 테스트 및 배포 (0%)
 
 ---
+## ✅ 2024-06-03
+**프론트엔드 연동 및 백엔드 일부 수정**
+- 실거래가/지역코드 API 응답 포맷 및 예외 처리 일부 개선
+- CORS 설정 및 Django REST Framework 설정 재점검
+- views.py: 프론트엔드 요청에 맞춘 파라미터 검증 및 응답 포맷 일부 수정
+- settings.py: CORS, REST Framework, 로깅 등 환경설정 보완
+
+---
 
 ## ✅ 2024-06-01
 **🔄 API 기능 개선 및 데이터 처리 로직 개선**
@@ -110,6 +118,7 @@
 | 5월 25일 | 💾 데이터베이스 및 API 설정 | • SQLite3 데이터베이스 초기화<br>• 공공데이터포털 API 키 설정<br>• .env 파일 구성<br>• 기본 API 호출 함수 구현 |
 | 5월 30일 | 🔄 프로젝트 재설정 | • 프로젝트 완전 API 서버화<br>• 기본 앱 구조 생성<br>• 사용자 인증 시스템 구현<br>• 부동산 매물 기본 모델 설계<br>• 공통 유틸리티 함수 구현 |
 | 5월 31일 | 🔄 앱 구조 개선 및 API 엔드포인트 구현 및 예외/응답 구조 표준화 | • 부동산 매물 관리 앱 이름을 `properties`에서 `realEstate`로 변경<br>• 마이그레이션 파일 재설정 및 의존성 수정<br>• URL 패턴 재구성 및 라우팅 설정<br>• API 엔드포인트 구현<br>  - `/api/properties/getRealEstateAptList/`: 아파트 매매 실거래가 조회<br>  - `/api/properties/getStanReginCd/`: 표준 지역 코드 조회<br>• 예외 및 에러 응답 구조 통합: `ExceptionView`와 커스텀 예외 클래스를 `config/exceptions.py`로 <br>통합<br>• body 내 header 및 중첩 body 자동 제거 로직 추가<br>• API 에러 코드 및 메시지 표준화<br>• 전역 예외 처리기(`custom_exception_handler`)를 통한 일관된 JSON 응답 제공<br>• 모든 API에서 일관된 에러/성공 응답 포맷 적용 |
+| 6월 3일 | 🔗 프론트엔드 연동 및 백엔드 일부 수정 | • 프론트엔드와 API 연동 테스트 및 데이터 흐름 점검<br>• 실거래가/지역코드 API 응답 포맷 및 예외 처리 일부 개선<br>• CORS 설정 및 Django REST Framework 설정 재점검<br>• views.py: 프론트엔드 요청에 맞춘 파라미터 검증 및 응답 포맷 일부 수정<br>• settings.py: CORS, REST Framework, 로깅 등 환경설정 보완<br>• README.md: 프론트엔드 연동 및 환경 최신화 내용 반영 |
 
 ---
 
